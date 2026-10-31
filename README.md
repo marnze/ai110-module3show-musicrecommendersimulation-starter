@@ -19,13 +19,43 @@ Replace this paragraph with your own summary of what your version does.
 
 Explain your design in plain language.
 
+Real platforms like Spotify mix collaborative filtering (what similar users liked) with
+content-based filtering (songs with similar attributes). Mine is content-based only, comparing
+each song's attributes to one user's taste profile, prioritizing genre first and then energy and mood.
+
 Some prompts to answer:
 
 - What features does each `Song` use in your system
   - For example: genre, mood, energy, tempo
+  
+  genre, mood, energy, acousticness
 - What information does your `UserProfile` store
+
+  favorite_genre, favorite_mood, target_energy, likes_acoustic
 - How does your `Recommender` compute a score for each song
+
+  +2 for a genre match, +1 for a mood match, up to +1.5 for energy closeness (`1 - |song.energy - target_energy|`), up to +0.5 for acoustic fit
 - How do you choose which songs to recommend
+
+  score every song, sort from highest to lowest, return the top k (default 5)
+
+**Algorithm Recipe**
+
+```
+score = 2.0 * genre_match
+      + 1.0 * mood_match
+      + 1.5 * (1 - |song.energy - target_energy|)
+      + 0.5 * acoustic_fit   # acousticness if likes_acoustic, else 1 - acousticness
+```
+
+Max score is 5.0. Ties go to the song with closer energy.
+
+**Expected biases**
+
+- Over-prioritizes genre, so a great mood and energy match from another genre can lose to a weak same-genre song.
+- Exact matching gives no credit for similar moods (chill vs relaxed) or genres (pop vs indie pop).
+- No valence, so it can't tell sad songs from calm ones with similar energy.
+- Genres with only one song in the catalog give those users few strong matches.
 
 You can include a simple diagram or bullet list if helpful.
 
