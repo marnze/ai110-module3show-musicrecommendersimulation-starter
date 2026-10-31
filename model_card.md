@@ -32,6 +32,13 @@ Prompts:
 
 Avoid code here. Pretend you are explaining the idea to a friend who does not program.
 
+The recommender works like a judge giving each song points for how well it fits your taste, then lining the songs up from most to fewest points.
+
+- **Song features used:** genre, mood, energy (how calm or intense it feels), and acousticness (acoustic instruments versus electronic sounds).
+- **User preferences:** a favorite genre, a favorite mood, how energetic you want your music to be, and whether you like acoustic songs.
+- **Turning these into a score:** a song gets 2 points if it's your favorite genre and 1 point if it matches your mood. It earns up to 1.5 more points for energy, and the closer its energy is to what you want, the more it gets, so a song isn't rewarded just for being louder or quieter. It gets up to 0.5 points for matching your acoustic preference. The best possible score is 5. The top 5 songs are recommended, each with a list of reasons showing where its points came from.
+- **Changes from the starter logic:** the starter only returned the first few songs in the file. I added real scoring, ranked every song in the catalog, broke ties by picking the song closer to your energy level, and attached reasons to every recommendation.
+
 ---
 
 ## 4. Data  

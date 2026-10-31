@@ -9,30 +9,49 @@ You will implement the functions in recommender.py:
 - recommend_songs
 """
 
-from recommender import load_songs, recommend_songs
+from src.recommender import load_songs, recommend_songs
 
 
-def main() -> None:
-    songs = load_songs("data/songs.csv") 
-
-    # Taste profile: a calm study listener
-    user_prefs = {
+# Taste profiles to compare
+PROFILES = {
+    "Happy pop fan": {
+        "favorite_genre": "pop",
+        "favorite_mood": "happy",
+        "target_energy": 0.80,
+        "likes_acoustic": False,
+    },
+    "Calm study listener": {
         "favorite_genre": "lofi",
         "favorite_mood": "chill",
         "target_energy": 0.40,
         "likes_acoustic": True,
-    }
+    },
+}
 
-    recommendations = recommend_songs(user_prefs, songs, k=5)
 
-    print("\nTop recommendations:\n")
-    for rec in recommendations:
-        # You decide the structure of each returned item.
-        # A common pattern is: (song, score, explanation)
-        song, score, explanation = rec
-        print(f"{song['title']} - Score: {score:.2f}")
-        print(f"Because: {explanation}")
-        print()
+def print_recommendations(name: str, user_prefs: dict, recommendations: list) -> None:
+    """Print a profile header followed by each ranked song with its score and reasons."""
+    print("=" * 60)
+    print(f"Profile: {name}")
+    print(
+        f"  genre={user_prefs['favorite_genre']}, mood={user_prefs['favorite_mood']}, "
+        f"energy={user_prefs['target_energy']:.2f}, likes_acoustic={user_prefs['likes_acoustic']}"
+    )
+    print("=" * 60)
+    for rank, (song, score, explanation) in enumerate(recommendations, start=1):
+        print(f"{rank}. {song['title']} by {song['artist']}  [score {score:.2f} / 5.00]")
+        for reason in explanation.split("; "):
+            print(f"     - {reason}")
+    print()
+
+
+def main() -> None:
+    songs = load_songs("data/songs.csv")
+    print(f"Loaded songs: {len(songs)}\n")
+
+    for name, user_prefs in PROFILES.items():
+        recommendations = recommend_songs(user_prefs, songs, k=5)
+        print_recommendations(name, user_prefs, recommendations)
 
 
 if __name__ == "__main__":
