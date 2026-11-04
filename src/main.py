@@ -26,6 +26,37 @@ PROFILES = {
         "target_energy": 0.40,
         "likes_acoustic": True,
     },
+    "Deep intense rock": {
+        "favorite_genre": "rock",
+        "favorite_mood": "intense",
+        "target_energy": 0.90,
+        "likes_acoustic": False,
+    },
+    # Adversarial / edge-case profiles
+    "Conflicted: high-energy but sad": {
+        "favorite_genre": "folk",
+        "favorite_mood": "sad",
+        "target_energy": 0.90,
+        "likes_acoustic": False,
+    },
+    "Acoustic metalhead": {
+        "favorite_genre": "metal",
+        "favorite_mood": "angry",
+        "target_energy": 0.95,
+        "likes_acoustic": True,
+    },
+    "Genre not in catalog": {
+        "favorite_genre": "k-pop",
+        "favorite_mood": "happy",
+        "target_energy": 0.70,
+        "likes_acoustic": False,
+    },
+    "Capitalized input": {
+        "favorite_genre": "Pop",
+        "favorite_mood": "Happy",
+        "target_energy": 0.80,
+        "likes_acoustic": False,
+    },
 }
 
 
@@ -39,7 +70,7 @@ def print_recommendations(name: str, user_prefs: dict, recommendations: list) ->
     )
     print("=" * 60)
     for rank, (song, score, explanation) in enumerate(recommendations, start=1):
-        print(f"{rank}. {song['title']} by {song['artist']}  [score {score:.2f} / 5.00]")
+        print(f"{rank}. {song['title']} by {song['artist']}  [score {score:.2f} / 5.50]")
         for reason in explanation.split("; "):
             print(f"     - {reason}")
     print()
