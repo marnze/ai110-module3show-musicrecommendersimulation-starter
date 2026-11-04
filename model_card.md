@@ -363,3 +363,11 @@ Prompts:
 - What you learned about recommender systems  
 - Something unexpected or interesting you discovered  
 - How this changed the way you think about music recommendation apps  
+
+**Biggest learning moment:** The capitalization test. I typed "Pop" instead of "pop" and Sunrise City fell from #1 to #2 behind a hip hop song. The algorithm's weights were fine, the problem was how input was matched. It showed me that small data details can matter more than the "smart" part of a system.
+
+**How AI helped, and when I double-checked:** AI helped me research how Spotify and YouTube recommend music, pick features from the CSV, and write the loading, scoring, and ranking functions quickly. I still had to check its work. Its hand-calculated scores were slightly off from the real output. I learned to run the code and compare it to the AI's claims instead of trusting them.
+
+**What surprised me:** Four simple rules and some addition produced lists that felt like real recommendations. The study profile got soft lofi, the rock profile got loud rock, and every pick came with a reason. But the same simplicity made it easy to fool. A song could rank #1 while badly missing the user's energy, and changing two weights made the results different rather than better.
+
+**What I'd try next:** Lowercase input and give partial credit for similar genres and moods, add valence and more songs per genre, and try a small collaborative-filtering version using fake listening histories to compare against the content-based approach.
